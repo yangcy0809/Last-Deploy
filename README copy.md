@@ -1,6 +1,4 @@
-# Last-Deploy
-随时随地部署一个项目
-
+last-deploy — 开源项目 Docker 管理 WebUI 工具
   ┌──────┬──────────────────────────────────┬─────────────────────────────────────┐
   │ 模块 │              技术栈              │              关键文件               │
   ├──────┼──────────────────────────────────┼─────────────────────────────────────┤
@@ -19,3 +17,29 @@
 5. 持久化 — SQLite 存储项目配置
 
 关键决策
+
+- Compose 执行：CLI 方式 (docker compose)，简单可靠
+- 异步任务：内存 Job 队列 + 单 Worker
+- 资源标记：com.last-deploy.project_id label
+- 安全：默认监听 127.0.0.1，路径校验防穿越
+
+运行方式
+
+## 后端
+```bash
+cd backend && go run ./cmd/last-deploy
+```
+
+## 前端 (开发)
+```bash
+cd frontend && npm install && npm run dev
+```
+## Docker 部署
+```bash
+cd deploy && docker compose up -d
+```
+## 验证
+```bash
+curl http://127.0.0.1:8080/api/health
+{"ok":true}
+```

@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  last-deploy:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${LAST_DEPLOY_HOST_DATA_DIR:-./data}:/app/data
+    environment:
+      - LAST_DEPLOY_ADDR=0.0.0.0:8080
+      - LAST_DEPLOY_DATA_DIR=/app/data
+      - LAST_DEPLOY_HOST_DATA_DIR=${LAST_DEPLOY_HOST_DATA_DIR:-${PWD}/data}
+    restart: unless-stopped
